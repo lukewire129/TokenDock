@@ -1,0 +1,150 @@
+<UserControl x:Class="TokenDock.CodexDashboardView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TokenDock"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:DataType="local:CodexDashboardViewModel"
+             d:DesignHeight="560"
+             d:DesignWidth="996"
+             mc:Ignorable="d">
+    <Grid ColumnDefinitions="250,*" ColumnSpacing="20" MinHeight="560">
+        <StackPanel Spacing="16">
+            <Border Classes="sidebarCard">
+                <StackPanel Spacing="14">
+                    <StackPanel Spacing="3">
+                        <TextBlock Classes="sectionTitle" Text="계정" />
+                        <TextBlock Classes="muted" Text="Codex 조회용 로그인" />
+                    </StackPanel>
+
+                    <Border Background="#F0FDF4" CornerRadius="14" Padding="12" IsVisible="{Binding AuthConnection.IsConnected}">
+                        <StackPanel Spacing="4">
+                            <TextBlock Foreground="#166534" FontSize="13" FontWeight="SemiBold" Text="연결됨" />
+                            <TextBlock Foreground="#15803D" FontSize="12" Text="사용량은 자동으로 갱신됩니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#FEF2F2" CornerRadius="14" Padding="12" IsVisible="{Binding AuthConnection.IsDisconnected}">
+                        <StackPanel Spacing="4">
+                            <TextBlock Foreground="#991B1B" FontSize="13" FontWeight="SemiBold" Text="연결 필요" />
+                            <TextBlock Foreground="#B91C1C" FontSize="12" Text="계정을 연결해야 플랜 사용량을 볼 수 있습니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="10">
+                        <TextBlock Classes="muted" Text="플랜" />
+                        <TextBlock Grid.Column="1" Foreground="#111827" FontSize="13" FontWeight="SemiBold" Text="{Binding Plan}" />
+                        <TextBlock Grid.Row="1" Classes="muted" Text="저장" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Foreground="#111827" FontSize="13" Text="Windows 암호화" />
+                    </Grid>
+
+                    <Button Classes="primary" HorizontalAlignment="Stretch" Command="{Binding ConnectAccount}" Content="OpenAI 계정 연결" IsVisible="{Binding AuthConnection.IsDisconnected}" />
+                    <Button Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding ClearAuth}" Content="연결 삭제" IsVisible="{Binding AuthConnection.IsConnected}" />
+                </StackPanel>
+            </Border>
+
+            <Border Classes="sidebarCard">
+                <StackPanel Spacing="12">
+                    <TextBlock Classes="sectionTitle" Text="상태" />
+                    <StackPanel Spacing="6">
+                        <TextBlock Classes="muted" Text="마지막 확인" />
+                        <TextBlock Foreground="#111827" FontSize="13" FontWeight="SemiBold" Text="{Binding Status}" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Spacing="6" IsVisible="{Binding AuthConnection.IsConnected}">
+                        <TextBlock Classes="muted" Text="자동 갱신" />
+                        <TextBlock Foreground="#111827" FontSize="13" FontWeight="SemiBold" Text="{Binding NextRefreshText}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Classes="sidebarCard">
+                <StackPanel Spacing="10">
+                    <TextBlock Classes="sectionTitle" Text="알림" />
+                    <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="20% · 10% · 5%" TextWrapping="Wrap" />
+                    <TextBlock Classes="muted" Text="남은 사용량이 줄어들면 앱 안에서 조용히 알려줍니다." TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,Auto" RowSpacing="18">
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
+                <Border Classes="card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Classes="muted" Text="5시간 한도" />
+                        <TextBlock Classes="metric" Text="{Binding FiveHourLimit}" />
+                        <TextBlock Classes="muted" Text="{Binding FiveHourLimitTimeText}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Classes="card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Classes="muted" Text="주간 한도" />
+                        <TextBlock Classes="metric" Text="{Binding WeeklyLimit}" />
+                        <TextBlock Classes="muted" Text="{Binding WeeklyLimitTimeText}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Classes="card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Classes="muted" Text="현재 플랜" />
+                        <TextBlock Classes="metric" Text="{Binding Plan}" />
+                        <TextBlock Classes="muted" Text="Codex 기준" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" ColumnDefinitions="1.45*,*" ColumnSpacing="16">
+                <Border Classes="card">
+                    <Grid RowDefinitions="Auto,*,Auto" RowSpacing="18">
+                        <StackPanel Spacing="4">
+                            <TextBlock Classes="sectionTitle" Text="사용량 상세" />
+                            <TextBlock Classes="muted" Text="Progress는 사용한 비율이며, 숫자는 남은 비율입니다." />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Spacing="22" VerticalAlignment="Center">
+                            <StackPanel Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Foreground="#111827" FontSize="15" FontWeight="SemiBold" Text="5시간 한도" />
+                                    <TextBlock Grid.Column="1" Classes="muted" Text="{Binding FiveHourLimit}" />
+                                </Grid>
+                                <ProgressBar Value="{Binding FiveHourUsedPercent}" Maximum="100" />
+                                <TextBlock Classes="muted" Text="{Binding FiveHourLimitTimeText}" />
+                            </StackPanel>
+
+                            <StackPanel Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Foreground="#111827" FontSize="15" FontWeight="SemiBold" Text="주간 한도" />
+                                    <TextBlock Grid.Column="1" Classes="muted" Text="{Binding WeeklyLimit}" />
+                                </Grid>
+                                <ProgressBar Foreground="#0EA5E9" Value="{Binding WeeklyUsedPercent}" Maximum="100" />
+                                <TextBlock Classes="muted" Text="{Binding WeeklyLimitTimeText}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <Border Grid.Row="2" Background="#F9FAFB" CornerRadius="16" Padding="12">
+                            <TextBlock Classes="muted" Text="새로고침 시점마다 현재 한도 상태를 다시 계산합니다." TextWrapping="Wrap" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Column="1" Spacing="16">
+                    <Border Classes="card">
+                        <StackPanel Spacing="10">
+                            <TextBlock Classes="sectionTitle" Text="Codex 사용 제한" />
+                            <TextBlock Foreground="#111827" FontSize="28" FontWeight="SemiBold" Text="{Binding RateLimitStatus}" TextWrapping="Wrap" />
+                            <TextBlock Classes="muted" Text="5시간/주간 한도에 걸려 현재 사용이 제한되는지 표시합니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Classes="card">
+                        <StackPanel Spacing="10">
+                            <TextBlock Classes="sectionTitle" Text="API 크레딧" />
+                            <TextBlock Foreground="#111827" FontSize="28" FontWeight="SemiBold" Text="{Binding CreditStatus}" TextWrapping="Wrap" />
+                            <TextBlock Classes="muted" Text="플랜 한도와 별개인 추가 결제/크레딧 상태입니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

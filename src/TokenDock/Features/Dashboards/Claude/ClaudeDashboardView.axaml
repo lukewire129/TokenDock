@@ -1,0 +1,181 @@
+<UserControl x:Class="TokenDock.ClaudeDashboardView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TokenDock"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:DataType="local:ClaudeDashboardViewModel"
+             d:DesignHeight="560"
+             d:DesignWidth="996"
+             mc:Ignorable="d">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.sectionTitle">
+            <Setter Property="Foreground" Value="#7C3F1D" />
+        </Style>
+
+        <Style Selector="TextBlock.metric">
+            <Setter Property="Foreground" Value="#8B3A1D" />
+        </Style>
+
+        <Style Selector="TextBlock.muted">
+            <Setter Property="Foreground" Value="#7C6A5B" />
+        </Style>
+
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="#FFFDF8" />
+            <Setter Property="BorderBrush" Value="#E7D5C2" />
+        </Style>
+
+        <Style Selector="Border.sidebarCard">
+            <Setter Property="Background" Value="#FFF8F0" />
+            <Setter Property="BorderBrush" Value="#E7D5C2" />
+        </Style>
+
+        <Style Selector="ProgressBar">
+            <Setter Property="Background" Value="#EFE2D3" />
+            <Setter Property="Foreground" Value="#C96442" />
+        </Style>
+
+        <Style Selector="Button.secondary">
+            <Setter Property="Background" Value="#FFF8F0" />
+            <Setter Property="Foreground" Value="#7C3F1D" />
+            <Setter Property="BorderBrush" Value="#D6B99F" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid ColumnDefinitions="250,*" ColumnSpacing="20" MinHeight="560">
+        <StackPanel Spacing="16">
+            <Border Classes="sidebarCard">
+                <StackPanel Spacing="14">
+                    <StackPanel Spacing="3">
+                        <TextBlock Classes="sectionTitle" Text="계정" />
+                        <TextBlock Classes="muted" Text="Claude CLI OAuth 기반 사용량" />
+                    </StackPanel>
+                    <Border Background="#F5EFE7" CornerRadius="14" Padding="12" IsVisible="{Binding Connection.IsConnected}">
+                        <StackPanel Spacing="4">
+                            <TextBlock Foreground="#7C3F1D" FontSize="13" FontWeight="SemiBold" Text="연결됨" />
+                            <TextBlock Foreground="#9A5A36" FontSize="12" Text="Claude 사용량은 30분마다 자동 갱신됩니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#FFF4E8" CornerRadius="14" Padding="12" IsVisible="{Binding Connection.IsDisconnected}">
+                        <StackPanel Spacing="4">
+                            <TextBlock Foreground="#9A3412" FontSize="13" FontWeight="SemiBold" Text="Claude CLI 필요" />
+                            <TextBlock Foreground="#B45309" FontSize="12" Text="~/.claude/.credentials.json의 OAuth 토큰으로 조회합니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="10">
+                        <TextBlock Classes="muted" Text="플랜" />
+                        <TextBlock Grid.Column="1" Foreground="#3D2B1F" FontSize="13" FontWeight="SemiBold" Text="{Binding Plan}" />
+                        <TextBlock Grid.Row="1" Classes="muted" Text="갱신" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Foreground="#3D2B1F" FontSize="13" Text="30분 자동" />
+                    </Grid>
+                    <Button Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding Diagnose}" Content="Claude 인증 진단" />
+                </StackPanel>
+            </Border>
+
+            <Border Classes="sidebarCard">
+                <StackPanel Spacing="12">
+                    <TextBlock Classes="sectionTitle" Text="상태" />
+                    <StackPanel Spacing="6">
+                        <TextBlock Classes="muted" Text="마지막 확인" />
+                        <TextBlock Foreground="#3D2B1F" FontSize="13" FontWeight="SemiBold" Text="{Binding Status}" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Spacing="6">
+                        <TextBlock Classes="muted" Text="자동 갱신" />
+                        <TextBlock Foreground="#3D2B1F" FontSize="13" FontWeight="SemiBold" Text="{Binding NextRefreshText}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Classes="sidebarCard">
+                <StackPanel Spacing="10">
+                    <TextBlock Classes="sectionTitle" Text="알림" />
+                    <TextBlock Foreground="#3D2B1F" FontSize="14" FontWeight="SemiBold" Text="30분 자동 갱신" TextWrapping="Wrap" />
+                    <TextBlock Classes="muted" Text="Claude usage API를 과하게 호출하지 않도록 최소 30분 간격으로 갱신합니다." TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,Auto" RowSpacing="18">
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
+                <Border Classes="card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Classes="muted" Text="5시간 한도" />
+                        <TextBlock Classes="metric" Text="{Binding SessionLimit}" />
+                        <TextBlock Classes="muted" Text="{Binding SessionLimitTimeText}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Classes="card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Classes="muted" Text="주간 한도" />
+                        <TextBlock Classes="metric" Text="{Binding WeeklyLimit}" />
+                        <TextBlock Classes="muted" Text="{Binding WeeklyLimitTimeText}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Classes="card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Classes="muted" Text="현재 플랜" />
+                        <TextBlock Classes="metric" Text="{Binding Plan}" />
+                        <TextBlock Classes="muted" Text="Claude 기준" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" ColumnDefinitions="1.45*,*" ColumnSpacing="16">
+                <Border Classes="card">
+                    <Grid RowDefinitions="Auto,*,Auto" RowSpacing="18">
+                        <StackPanel Spacing="4">
+                            <TextBlock Classes="sectionTitle" Text="사용량 상세" />
+                            <TextBlock Classes="muted" Text="Progress는 사용한 비율이며, 숫자는 남은 비율입니다." />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Spacing="22" VerticalAlignment="Center">
+                            <StackPanel Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Foreground="#3D2B1F" FontSize="15" FontWeight="SemiBold" Text="5시간 한도" />
+                                    <TextBlock Grid.Column="1" Classes="muted" Text="{Binding SessionLimit}" />
+                                </Grid>
+                                <ProgressBar Value="{Binding SessionUsedPercent}" Maximum="100" />
+                                <TextBlock Classes="muted" Text="{Binding SessionLimitTimeText}" />
+                            </StackPanel>
+
+                            <StackPanel Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Foreground="#3D2B1F" FontSize="15" FontWeight="SemiBold" Text="주간 한도" />
+                                    <TextBlock Grid.Column="1" Classes="muted" Text="{Binding WeeklyLimit}" />
+                                </Grid>
+                                <ProgressBar Foreground="#B06A2D" Value="{Binding WeeklyUsedPercent}" Maximum="100" />
+                                <TextBlock Classes="muted" Text="{Binding WeeklyLimitTimeText}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <Border Grid.Row="2" Background="#F7EFE6" CornerRadius="16" Padding="12">
+                            <TextBlock Classes="muted" Text="수동 새로고침은 즉시 조회하고, 자동 갱신은 30분마다 실행합니다." TextWrapping="Wrap" />
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Column="1" Spacing="16">
+                    <Border Classes="card">
+                        <StackPanel Spacing="10">
+                            <TextBlock Classes="sectionTitle" Text="Claude 사용 제한" />
+                            <TextBlock Foreground="#3D2B1F" FontSize="28" FontWeight="SemiBold" Text="{Binding RateLimitStatus}" TextWrapping="Wrap" />
+                            <TextBlock Classes="muted" Text="5시간/주간 한도에 걸려 현재 사용이 제한되는지 표시합니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Classes="card">
+                        <StackPanel Spacing="10">
+                            <TextBlock Classes="sectionTitle" Text="모델별 한도" />
+                            <TextBlock Foreground="#3D2B1F" FontSize="28" FontWeight="SemiBold" Text="{Binding CreditStatus}" TextWrapping="Wrap" />
+                            <TextBlock Classes="muted" Text="Opus/Sonnet 등 모델별 주간 한도 정보가 있으면 표시합니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

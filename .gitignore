@@ -1,0 +1,49 @@
+## Visual Studio
+.vs/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## .NET
+project.lock.json
+project.assets.json
+*.nuget.g.props
+*.nuget.g.targets
+artifacts/
+
+## Test results
+[Tt]est[Rr]esult*/
+[Tt]est[Rr]esults/
+*.trx
+*.coverage
+*.coveragexml
+coverage/
+coverage.*
+
+## Publish output
+publish/
+*.nupkg
+*.snupkg
+
+## Rider / ReSharper
+.idea/
+_ReSharper*/
+*.DotSettings.user
+
+## OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+## Local environment
+.env
+.env.*
+!.env.example

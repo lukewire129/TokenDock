@@ -1,0 +1,107 @@
+<UserControl x:Class="TokenDock.SettingsView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:TokenDock"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:DataType="local:SettingsViewModel"
+             d:DesignHeight="560"
+             d:DesignWidth="996"
+             mc:Ignorable="d">
+    <Grid ColumnDefinitions="1.1*,*" ColumnSpacing="16">
+        <StackPanel Spacing="16">
+            <Border Classes="card">
+                <StackPanel Spacing="16">
+                    <StackPanel Spacing="6">
+                        <TextBlock Classes="sectionTitle" Text="AI 사용" />
+                        <TextBlock Classes="muted" Text="현황 화면에 표시할 서비스를 선택합니다. 최소 하나는 켜져 있어야 합니다." TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="14">
+                        <StackPanel Spacing="4">
+                            <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="Codex" />
+                            <TextBlock Classes="muted" Text="OpenAI Codex 사용량을 표시합니다." />
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" Command="{Binding ToggleUseCodex}" IsChecked="{Binding Settings.UseCodex, Mode=OneWay}" />
+
+                        <StackPanel Grid.Row="1" Spacing="4">
+                            <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="Claude" />
+                            <TextBlock Classes="muted" Text="Claude CLI OAuth 사용량을 표시합니다." />
+                        </StackPanel>
+                        <CheckBox Grid.Row="1" Grid.Column="1" Command="{Binding ToggleUseClaude}" IsChecked="{Binding Settings.UseClaude, Mode=OneWay}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Classes="card">
+                <StackPanel Spacing="18">
+                    <StackPanel Spacing="6">
+                        <TextBlock Classes="sectionTitle" Text="미니 위젯" />
+                        <TextBlock Classes="muted" Text="작업 중에도 선택한 AI 한도 상태를 작게 띄워둡니다." TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="14">
+                        <StackPanel Spacing="4">
+                            <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="위젯 표시" />
+                            <TextBlock Classes="muted" Text="트레이와 별도로 반투명 상태 창을 띄웁니다." />
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" Command="{Binding ToggleWidget}" IsChecked="{Binding Settings.IsWidgetVisible, Mode=OneWay}" />
+
+                        <StackPanel Grid.Row="1" Spacing="4">
+                            <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="항상 위" />
+                            <TextBlock Classes="muted" Text="다른 창보다 위에 유지합니다." />
+                        </StackPanel>
+                        <CheckBox Grid.Row="1" Grid.Column="1" Command="{Binding ToggleAlwaysOnTop}" IsChecked="{Binding Settings.IsWidgetAlwaysOnTop, Mode=OneWay}" />
+
+                        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="투명도" />
+                                <TextBlock Grid.Column="1" Classes="muted" Text="{Binding Settings.WidgetOpacity, StringFormat={}{0:0.00}}" />
+                            </Grid>
+                            <Slider Minimum="0.45" Maximum="1" Value="{Binding Settings.WidgetOpacity}" local:SliderValueCommand.Command="{Binding SetWidgetOpacity}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Spacing="10">
+                        <StackPanel Spacing="4">
+                            <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="표시 대상" />
+                            <TextBlock Classes="muted" Text="자동은 AI 사용 설정에 맞춰 Codex/Claude/통합을 고릅니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                            <Button Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetWidgetTargetAuto}" Content="자동" />
+                            <Button Grid.Column="1" Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetWidgetTargetCombined}" Content="통합" />
+                            <Button Grid.Row="1" Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetWidgetTargetCodex}" Content="Codex" />
+                            <Button Grid.Row="1" Grid.Column="1" Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetWidgetTargetClaude}" Content="Claude" />
+                        </Grid>
+                        <Border Background="#F9FAFB" CornerRadius="16" Padding="12">
+                            <StackPanel Spacing="6">
+                                <TextBlock Foreground="#111827" FontSize="13" FontWeight="SemiBold" Text="현재 대상" />
+                                <TextBlock Classes="muted" Text="{Binding Settings.WidgetTarget}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+            <Border Grid.Column="1" Classes="card">
+                <StackPanel Spacing="16">
+                    <StackPanel Spacing="6">
+                        <TextBlock Classes="sectionTitle" Text="위젯 스타일" />
+                        <TextBlock Classes="muted" Text="원하는 정보 밀도에 맞게 표시 방식을 바꿉니다." TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <Button Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetGlassMode}" Content="Glass · 반투명 카드" />
+                    <Button Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetCompactMode}" Content="Compact · 작은 한 줄" />
+                    <Button Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetGaugeMode}" Content="Gauge · 진행률 중심" />
+
+                    <Border Background="#F9FAFB" CornerRadius="16" Padding="12">
+                        <StackPanel Spacing="6">
+                            <TextBlock Foreground="#111827" FontSize="13" FontWeight="SemiBold" Text="현재 모드" />
+                            <TextBlock Classes="muted" Text="{Binding Settings.WidgetMode}" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+    </Grid>
+</UserControl>

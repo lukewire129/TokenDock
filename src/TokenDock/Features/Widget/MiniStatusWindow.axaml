@@ -1,0 +1,188 @@
+<Window x:Class="TokenDock.MiniStatusWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TokenDock"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        SizeToContent="WidthAndHeight"
+        Background="Transparent"
+        CanResize="False"
+        Opacity="{Binding Snapshot.WidgetOpacity}"
+        ShowInTaskbar="False"
+        Topmost="{Binding Snapshot.IsWidgetAlwaysOnTop}"
+        WindowDecorations="None"
+        WindowStartupLocation="Manual"
+        x:DataType="local:MiniStatusWidgetViewModel"
+        d:DesignHeight="170"
+        d:DesignWidth="320"
+        mc:Ignorable="d">
+    <Window.Styles>
+        <Style Selector="TextBlock.widgetLabel">
+            <Setter Property="Foreground" Value="#E5E7EB" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style Selector="TextBlock.widgetMetric">
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="ProgressBar">
+            <Setter Property="Height" Value="7" />
+            <Setter Property="CornerRadius" Value="99" />
+            <Setter Property="Background" Value="#334155" />
+            <Setter Property="Foreground" Value="#10A37F" />
+        </Style>
+    </Window.Styles>
+
+    <Border Padding="16"
+            Background="#E7111827"
+            BorderBrush="#44FFFFFF"
+            BorderThickness="1"
+            CornerRadius="24"
+            PointerPressed="Widget_OnPointerPressed">
+        <Grid>
+            <Grid RowDefinitions="auto, *, auto" IsVisible="{Binding Snapshot.IsSingleGlassMode}" RowSpacing="6">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel>
+                        <TextBlock Foreground="#FFFFFF" FontSize="15" FontWeight="SemiBold" Text="{Binding Snapshot.Title}" />
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.Subtitle}" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Classes="widgetLabel" Text="Glass" VerticalAlignment="Center" />
+                </Grid>
+
+                <Grid ColumnDefinitions="200, 200" ColumnSpacing="10" Grid.Row="1">
+                    <Grid RowDefinitions="auto, auto, auto" RowSpacing="6">
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.PrimaryLabel}" Grid.Row="0"/>
+                        <TextBlock Classes="widgetMetric" Text="{Binding Snapshot.PrimaryLimit}" TextWrapping="NoWrap" Grid.Row="1"/>
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.PrimaryUsedPercent}" Grid.Row="2" MinWidth="100"/>
+                    </Grid>
+                    <Grid RowDefinitions="auto, auto, auto" RowSpacing="6" Grid.Column="1">
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.SecondaryLabel}" />
+                        <TextBlock Classes="widgetMetric" Text="{Binding Snapshot.SecondaryLimit}" TextWrapping="NoWrap" Grid.Row="1"/>
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.SecondaryUsedPercent}" Grid.Row="2" MinWidth="100"/>
+                    </Grid>
+                </Grid>
+
+                <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.NextRefreshText}" Grid.Row="2"/>
+            </Grid>
+            <Grid RowDefinitions="auto, *, auto" IsVisible="{Binding Snapshot.IsCombinedGlassMode}" RowSpacing="6">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel>
+                        <TextBlock Foreground="#FFFFFF" FontSize="15" FontWeight="SemiBold" Text="{Binding Snapshot.Title}" />
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.Subtitle}" />
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Classes="widgetLabel" Text="Glass" VerticalAlignment="Center" />
+                </Grid>
+
+                <Grid ColumnDefinitions="200,200" ColumnSpacing="15" Grid.Row="1">
+                    <Grid RowDefinitions="auto, auto, auto, auto, auto" RowSpacing="6">
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.PrimaryLabel}" Grid.Row="0"/>
+                        <TextBlock Classes="widgetMetric" Text="{Binding Snapshot.PrimaryLimit}" TextWrapping="NoWrap" Grid.Row="1"/>
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.PrimaryUsedPercent}" Grid.Row="2" MinWidth="100"/>
+                        <TextBlock Classes="widgetMetric" Text="{Binding Snapshot.PrimaryLimit2}" TextWrapping="NoWrap" Grid.Row="3"/>
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.PrimaryUsedPercent2}" Grid.Row="4" MinWidth="100"/>
+                    </Grid>
+                    <Grid RowDefinitions="auto, auto, auto,auto,auto" RowSpacing="6" Grid.Column="1">
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.SecondaryLabel}" />
+                        <TextBlock Classes="widgetMetric" Text="{Binding Snapshot.SecondaryLimit}" TextWrapping="NoWrap" Grid.Row="1"/>
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.SecondaryUsedPercent}" Grid.Row="2" MinWidth="100"/>
+                        <TextBlock Classes="widgetMetric" Text="{Binding Snapshot.SecondaryLimit2}" TextWrapping="NoWrap" Grid.Row="3"/>
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.SecondaryUsedPercent2}" Grid.Row="4" MinWidth="100"/>
+                    </Grid>
+                </Grid>
+
+                <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.NextRefreshText}" Grid.Row="2"/>
+            </Grid>
+
+            <Grid IsVisible="{Binding Snapshot.IsSingleCodexCompactMode}" ColumnDefinitions="Auto,*" ColumnSpacing="10" VerticalAlignment="Center">
+                <Border Width="10" Height="10" Background="#10A37F" CornerRadius="99" VerticalAlignment="Center" />
+                <Grid ColumnDefinitions="100, *"  Grid.Column="1" ColumnSpacing="6">
+                    <TextBlock Text="Codex" Classes="widgetLabel"/>
+                    <TextBlock Grid.Column="1" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold" Text="{Binding Snapshot.CompactText}" VerticalAlignment="Center" />
+                </Grid>
+            </Grid>
+            <Grid IsVisible="{Binding Snapshot.IsSingleClaudeCompactMode}" ColumnDefinitions="Auto,*" ColumnSpacing="10" VerticalAlignment="Center">
+                <Border Width="10" Height="10" Background="#D97706" CornerRadius="99" VerticalAlignment="Center" />
+                <Grid ColumnDefinitions="100, *"  Grid.Column="1" ColumnSpacing="6">
+                    <TextBlock Text="Claude" Classes="widgetLabel"/>
+                    <TextBlock Grid.Column="1" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold" Text="{Binding Snapshot.CompactText}" VerticalAlignment="Center" />
+                </Grid>
+            </Grid>
+
+            <Grid IsVisible="{Binding Snapshot.IsCombinedCompactMode}" RowDefinitions="Auto,Auto" RowSpacing="8" VerticalAlignment="Center">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Border Width="10" Height="10" Background="#10A37F" CornerRadius="99" VerticalAlignment="Center" />
+                    <Grid ColumnDefinitions="100, *"  Grid.Column="1" ColumnSpacing="6">
+                        <TextBlock Text="Codex" Classes="widgetLabel"/>
+                        <TextBlock Grid.Column="1" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold" Text="{Binding Snapshot.CompactText}" VerticalAlignment="Center" />
+                    </Grid>
+                </Grid>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" Grid.Row="1" >
+                    <Border Width="10" Height="10" Background="#D97706" CornerRadius="99" VerticalAlignment="Center" />
+                    <Grid ColumnDefinitions="100, *"  Grid.Column="1" ColumnSpacing="6">
+                        <TextBlock Text="Claude" Classes="widgetLabel"/>
+                        <TextBlock Grid.Column="1" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold" Text="{Binding Snapshot.CompactExtendedText}" />
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <StackPanel IsVisible="{Binding Snapshot.IsSingleGaugeMode}" Spacing="14" VerticalAlignment="Center">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Foreground="#FFFFFF" FontSize="15" FontWeight="SemiBold" Text="{Binding Snapshot.Title}" />
+                    <TextBlock Grid.Column="1" Classes="widgetLabel" Text="{Binding Snapshot.Subtitle}" />
+                </Grid>
+                <StackPanel Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.PrimaryLabel}" />
+                        <TextBlock Grid.Column="1" Classes="widgetLabel" Text="{Binding Snapshot.PrimaryUsedPercent, StringFormat={}{0}%}" />
+                    </Grid>
+                    <ProgressBar Maximum="100" Value="{Binding Snapshot.PrimaryUsedPercent}" />
+                </StackPanel>
+                <StackPanel Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.SecondaryLabel}" />
+                        <TextBlock Grid.Column="1" Classes="widgetLabel" Text="{Binding Snapshot.SecondaryUsedPercent, StringFormat={}{0}%}" />
+                    </Grid>
+                    <ProgressBar Maximum="100" Value="{Binding Snapshot.SecondaryUsedPercent}" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel IsVisible="{Binding Snapshot.IsCombinedGaugeMode}" Spacing="14" VerticalAlignment="Center">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <TextBlock Foreground="#FFFFFF" FontSize="15" FontWeight="SemiBold" Text="{Binding Snapshot.Title}" />
+                    <TextBlock Grid.Column="1" Classes="widgetLabel" Text="{Binding Snapshot.Subtitle}"  VerticalAlignment="Bottom"/>
+                </Grid>
+                <StackPanel Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.PrimaryLabel}" />
+                        <TextBlock Grid.Column="1" Classes="widgetLabel" Text="{Binding Snapshot.PrimaryUsedPercent, StringFormat={}{0}%}" />
+                    </Grid>
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <TextBlock Text="5h" Classes="widgetLabel" />
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.PrimaryUsedPercent}" Grid.Column="1"/>
+                    </Grid>
+                    <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.PrimaryUsedPercent2, StringFormat={}{0}%}" HorizontalAlignment="Right"/>
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <TextBlock Text="7d" Classes="widgetLabel" />
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.PrimaryUsedPercent2}" Grid.Column="1"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Spacing="6">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.SecondaryLabel}" />
+                        <TextBlock Grid.Column="1" Classes="widgetLabel" Text="{Binding Snapshot.SecondaryUsedPercent, StringFormat={}{0}%}" />
+                    </Grid>
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <TextBlock Text="5h" Classes="widgetLabel" />
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.SecondaryUsedPercent}"  Grid.Column="1"/>
+                    </Grid>
+                    <TextBlock Classes="widgetLabel" Text="{Binding Snapshot.SecondaryUsedPercent2, StringFormat={}{0}%}" HorizontalAlignment="Right"/>
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="10">
+                        <TextBlock Text="7d" Classes="widgetLabel" />
+                        <ProgressBar Maximum="100" Value="{Binding Snapshot.SecondaryUsedPercent2}" Grid.Column="1"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
