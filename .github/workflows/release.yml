@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore
+        run: dotnet restore TokenDock.sln
+
+      - name: Test
+        run: dotnet test TokenDock.sln -c Release --no-restore
+
+      - name: Read version
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          if ($tag -notmatch '^v(.+)$') {
+            throw "Release tag must start with v. Actual: $tag"
+          }
+          $version = $Matches[1]
+          $publishDir = Join-Path $env:GITHUB_WORKSPACE 'artifacts/publish'
+          $installerDir = Join-Path $env:GITHUB_WORKSPACE 'artifacts/installer'
+          "APP_VERSION=$version" >> $env:GITHUB_ENV
+          "PUBLISH_DIR=$publishDir" >> $env:GITHUB_ENV
+          "INSTALLER_DIR=$installerDir" >> $env:GITHUB_ENV
+
+      - name: Publish app
+        run: >
+          dotnet publish src/TokenDock/TokenDock.csproj
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:Version=${{ env.APP_VERSION }}
+          -o artifacts/publish
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --yes --no-progress
+
+      - name: Build installer
+        shell: pwsh
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\TokenDock.iss'
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/installer/TokenDockSetup-v${{ env.APP_VERSION }}-win-x64.exe
