@@ -105,7 +105,7 @@
                 <Border Width="10" Height="10" Background="#D97706" CornerRadius="99" VerticalAlignment="Center" />
                 <Grid ColumnDefinitions="100, *"  Grid.Column="1" ColumnSpacing="6">
                     <TextBlock Text="Claude" Classes="widgetLabel"/>
-                    <TextBlock Grid.Column="1" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold" Text="{Binding Snapshot.CompactText}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold" Text="{Binding Snapshot.CompactExtendedText}" VerticalAlignment="Center" />
                 </Grid>
             </Grid>
 

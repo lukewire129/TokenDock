@@ -94,13 +94,15 @@ public partial record MiniStatusWidgetModel
 
     public string Title => EffectiveTarget switch
     {
-        EffectiveWidgetTarget.Claude => "Claude Usage",
+        EffectiveWidgetTarget.Codex => "Codex",
+        EffectiveWidgetTarget.Claude => "Claude",
         EffectiveWidgetTarget.Combined => "AI Usage",
         _ => "TokenDock"
     };
 
     public string Subtitle => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.Plan ?? "Codex",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.Plan ?? "Claude",
         EffectiveWidgetTarget.Combined => $"Codex ({CodexDashboard.Plan})  /  Claude ({ClaudeDashboard.Plan})",
         _ => CodexDashboard.Plan ?? "Codex"
@@ -112,6 +114,7 @@ public partial record MiniStatusWidgetModel
 
     public string PrimaryLimit => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.FiveHourLimit ?? "--% 남음",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.SessionLimit ?? "--% 남음",
         EffectiveWidgetTarget.Combined => $"5h {CodexDashboard.FiveHourLimit}",
         _ => CodexDashboard.FiveHourLimit ?? "--% 남음"
@@ -119,6 +122,7 @@ public partial record MiniStatusWidgetModel
 
     public string PrimaryLimit2 => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.FiveHourLimit ?? "--% 남음",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.SessionLimit ?? "--% 남음",
         EffectiveWidgetTarget.Combined => $"7d {CodexDashboard.WeeklyLimit}",
         _ => CodexDashboard.FiveHourLimit ?? "--% 남음"
@@ -126,12 +130,14 @@ public partial record MiniStatusWidgetModel
 
     public string PrimaryUsedPercent => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.FiveHourUsedPercent ?? "0",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.SessionUsedPercent ?? "0",
         _ => CodexDashboard.FiveHourUsedPercent ?? "0"
     };
 
     public string PrimaryUsedPercent2 => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.FiveHourUsedPercent ?? "0",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.SessionUsedPercent ?? "0",
         _ => CodexDashboard.WeeklyUsedPercent ?? "0"
     };
@@ -142,6 +148,7 @@ public partial record MiniStatusWidgetModel
 
     public string SecondaryLimit => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.WeeklyLimit ?? "0",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.WeeklyLimit ?? "--% 남음",
         EffectiveWidgetTarget.Combined => $"5d {ClaudeDashboard.SessionLimit}",
         _ => CodexDashboard.WeeklyLimit ?? "--% 남음"
@@ -149,6 +156,7 @@ public partial record MiniStatusWidgetModel
 
     public string SecondaryLimit2 => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.WeeklyLimit ?? "0",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.WeeklyLimit ?? "--% 남음",
         EffectiveWidgetTarget.Combined => $"7d {ClaudeDashboard.WeeklyLimit}",
         _ => CodexDashboard.WeeklyLimit ?? "--% 남음"
@@ -156,6 +164,7 @@ public partial record MiniStatusWidgetModel
 
     public string SecondaryUsedPercent => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.WeeklyUsedPercent ?? "0",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.WeeklyUsedPercent ?? "0",
         EffectiveWidgetTarget.Combined => ClaudeDashboard.SessionUsedPercent ?? "0",
         _ => CodexDashboard.WeeklyUsedPercent ?? "0"
@@ -163,6 +172,7 @@ public partial record MiniStatusWidgetModel
 
     public string SecondaryUsedPercent2 => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.WeeklyUsedPercent ?? "0",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.WeeklyUsedPercent ?? "0",
         EffectiveWidgetTarget.Combined => ClaudeDashboard.WeeklyUsedPercent ?? "0",
         _ => CodexDashboard.WeeklyUsedPercent ?? "0"
@@ -170,14 +180,13 @@ public partial record MiniStatusWidgetModel
 
     public string NextRefreshText => EffectiveTarget switch
     {
+        EffectiveWidgetTarget.Codex => CodexDashboard.NextRefreshText ?? "Codex 사용량 조회 대기",
         EffectiveWidgetTarget.Claude => ClaudeDashboard.NextRefreshText ?? "Claude 사용량 조회 대기",
         EffectiveWidgetTarget.Combined => $"Codex {CodexDashboard.NextRefreshText} · Claude {ClaudeDashboard.NextRefreshText}",
         _ => CodexDashboard.NextRefreshText ?? "Codex 사용량 조회 대기"
     };
 
-    public string CompactText => EffectiveTarget == EffectiveWidgetTarget.Combined
-        ? FormatCompactGroup(ClaudeDashboard.SessionLimit, ClaudeDashboard.WeeklyLimit)
-        : FormatCompactGroup(CodexDashboard.FiveHourLimit, CodexDashboard.WeeklyLimit);
+    public string CompactText => FormatCompactGroup (CodexDashboard.FiveHourLimit, CodexDashboard.WeeklyLimit);
 
     public string CompactExtendedText => FormatCompactGroup(ClaudeDashboard.SessionLimit, ClaudeDashboard.WeeklyLimit);
 
