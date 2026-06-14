@@ -9,6 +9,7 @@ namespace TokenDock;
 public partial record SettingsModel
 {
     private readonly WidgetSettingsStore _settingsStore;
+    private readonly WindowsStartupRegistrationService _startupRegistrationService;
     private SettingsSnapshot? _lastSavedSettings;
     private CancellationTokenSource? _saveDebounceCts;
     private bool _isLoaded;
@@ -16,13 +17,16 @@ public partial record SettingsModel
     public IState<SettingsSnapshot> Settings => State.Value(this, () => SettingsSnapshot.Default);
 
     public SettingsModel()
-        : this(new WidgetSettingsStore())
+        : this(new WidgetSettingsStore(), new WindowsStartupRegistrationService())
     {
     }
 
-    public SettingsModel(WidgetSettingsStore settingsStore)
+    public SettingsModel(
+        WidgetSettingsStore settingsStore,
+        WindowsStartupRegistrationService startupRegistrationService)
     {
         _settingsStore = settingsStore;
+        _startupRegistrationService = startupRegistrationService;
         _ = LoadAsync(CancellationToken.None);
     }
 
@@ -81,6 +85,11 @@ public partial record SettingsModel
         await UpdateAsync(Settings => Settings with { UseClaude = !Settings.UseClaude }, cancellationToken);
     }
 
+    public async ValueTask ToggleStartWithWindows(CancellationToken cancellationToken)
+    {
+        await UpdateAsync(Settings => Settings with { StartWithWindows = !Settings.StartWithWindows }, cancellationToken);
+    }
+
     public async ValueTask SetWidgetOpacity(double opacity, CancellationToken cancellationToken)
     {
         await UpdateAsync(Settings => Settings with { WidgetOpacity = NormalizeOpacity(opacity) }, cancellationToken);
@@ -100,6 +109,7 @@ public partial record SettingsModel
     {
         var settings = ToSnapshot(await _settingsStore.LoadAsync(cancellationToken));
         await Settings.SetAsync(settings, cancellationToken);
+        _startupRegistrationService.SetEnabled(settings.StartWithWindows);
         _lastSavedSettings = settings;
         _isLoaded = true;
     }
@@ -114,6 +124,11 @@ public partial record SettingsModel
         }
 
         await Settings.SetAsync(next, cancellationToken);
+        if (next.StartWithWindows != current.StartWithWindows)
+        {
+            _startupRegistrationService.SetEnabled(next.StartWithWindows);
+        }
+
         ScheduleSave();
     }
 
@@ -166,7 +181,8 @@ public partial record SettingsModel
             settings.X,
             settings.Y,
             settings.UseCodex,
-            settings.UseClaude));
+            settings.UseClaude,
+            settings.StartWithWindows));
     }
 
     private static WidgetSettings ToWidgetSettings(SettingsSnapshot settings)
@@ -180,7 +196,8 @@ public partial record SettingsModel
             settings.WidgetX,
             settings.WidgetY,
             settings.UseCodex,
-            settings.UseClaude);
+            settings.UseClaude,
+            settings.StartWithWindows);
     }
 
     private static SettingsSnapshot Normalize(SettingsSnapshot settings)
@@ -211,7 +228,8 @@ public sealed record SettingsSnapshot(
     int? WidgetX,
     int? WidgetY,
     bool UseCodex,
-    bool UseClaude)
+    bool UseClaude,
+    bool StartWithWindows)
 {
     public static SettingsSnapshot Default { get; } = new(
         IsWidgetVisible: false,
@@ -222,7 +240,8 @@ public sealed record SettingsSnapshot(
         WidgetX: null,
         WidgetY: null,
         UseCodex: true,
-        UseClaude: true);
+        UseClaude: true,
+        StartWithWindows: false);
 }
 
 public enum WidgetMode

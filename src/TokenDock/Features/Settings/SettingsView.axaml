@@ -17,7 +17,7 @@
                         <TextBlock Classes="muted" Text="현황 화면에 표시할 서비스를 선택합니다. 최소 하나는 켜져 있어야 합니다." TextWrapping="Wrap" />
                     </StackPanel>
 
-                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="14">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="14">
                         <StackPanel Spacing="4">
                             <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="Codex" />
                             <TextBlock Classes="muted" Text="OpenAI Codex 사용량을 표시합니다." />
@@ -29,6 +29,12 @@
                             <TextBlock Classes="muted" Text="Claude CLI OAuth 사용량을 표시합니다." />
                         </StackPanel>
                         <CheckBox Grid.Row="1" Grid.Column="1" Command="{Binding ToggleUseClaude}" IsChecked="{Binding Settings.UseClaude, Mode=OneWay}" />
+
+                        <StackPanel Grid.Row="2" Spacing="4">
+                            <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="Windows 시작 시 자동 실행" />
+                            <TextBlock Classes="muted" Text="로그인하면 TokenDock을 자동으로 실행합니다." />
+                        </StackPanel>
+                        <CheckBox Grid.Row="2" Grid.Column="1" Command="{Binding ToggleStartWithWindows}" IsChecked="{Binding Settings.StartWithWindows, Mode=OneWay}" />
                     </Grid>
                 </StackPanel>
             </Border>

@@ -62,7 +62,8 @@ public sealed record WidgetSettings(
     int? X,
     int? Y,
     bool UseCodex = true,
-    bool UseClaude = true)
+    bool UseClaude = true,
+    bool StartWithWindows = false)
 {
     public static WidgetSettings Default { get; } = new(
         IsVisible: false,
@@ -73,5 +74,6 @@ public sealed record WidgetSettings(
         X: null,
         Y: null,
         UseCodex: true,
-        UseClaude: true);
+        UseClaude: true,
+        StartWithWindows: false);
 }
