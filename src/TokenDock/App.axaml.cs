@@ -12,6 +12,7 @@ namespace TokenDock
         private bool _isExitRequested;
         private MainWindow? _mainWindow;
         private MiniStatusWindowCoordinator? _miniStatusWindowCoordinator;
+        private TaskbarBandWindowCoordinator? _taskbarBandWindowCoordinator;
         private TrayIcon? _trayIcon;
         private NativeMenuItem? _toggleWidgetItem;
 
@@ -30,6 +31,7 @@ namespace TokenDock
                 _trayIcon = CreateTrayIcon();
                 _miniStatusWindowCoordinator = new MiniStatusWindowCoordinator(_mainWindow);
                 _miniStatusWindowCoordinator.ToggleHeaderChanged += SetToggleWidgetHeader;
+                _taskbarBandWindowCoordinator = new TaskbarBandWindowCoordinator(_mainWindow);
             }
 
             base.OnFrameworkInitializationCompleted();
@@ -60,6 +62,8 @@ namespace TokenDock
             _isExitRequested = true;
             _miniStatusWindowCoordinator?.Dispose();
             _miniStatusWindowCoordinator = null;
+            _taskbarBandWindowCoordinator?.Dispose();
+            _taskbarBandWindowCoordinator = null;
             _trayIcon?.Dispose();
             _trayIcon = null;
 

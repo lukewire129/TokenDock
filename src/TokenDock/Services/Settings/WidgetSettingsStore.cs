@@ -63,7 +63,9 @@ public sealed record WidgetSettings(
     int? Y,
     bool UseCodex = true,
     bool UseClaude = true,
-    bool StartWithWindows = false)
+    bool StartWithWindows = false,
+    bool IsTaskbarBandVisible = false,
+    TaskbarBandMetricMode TaskbarBandMetricMode = TaskbarBandMetricMode.Remaining)
 {
     public static WidgetSettings Default { get; } = new(
         IsVisible: false,
@@ -75,5 +77,7 @@ public sealed record WidgetSettings(
         Y: null,
         UseCodex: true,
         UseClaude: true,
-        StartWithWindows: false);
+        StartWithWindows: false,
+        IsTaskbarBandVisible: false,
+        TaskbarBandMetricMode: TaskbarBandMetricMode.Remaining);
 }

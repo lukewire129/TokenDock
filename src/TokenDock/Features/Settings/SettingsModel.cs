@@ -90,6 +90,21 @@ public partial record SettingsModel
         await UpdateAsync(Settings => Settings with { StartWithWindows = !Settings.StartWithWindows }, cancellationToken);
     }
 
+    public async ValueTask ToggleTaskbarBand(CancellationToken cancellationToken)
+    {
+        await UpdateAsync(Settings => Settings with { IsTaskbarBandVisible = !Settings.IsTaskbarBandVisible }, cancellationToken);
+    }
+
+    public async ValueTask SetTaskbarBandUsedMode(CancellationToken cancellationToken)
+    {
+        await UpdateAsync(Settings => Settings with { TaskbarBandMetricMode = TaskbarBandMetricMode.Used }, cancellationToken);
+    }
+
+    public async ValueTask SetTaskbarBandRemainingMode(CancellationToken cancellationToken)
+    {
+        await UpdateAsync(Settings => Settings with { TaskbarBandMetricMode = TaskbarBandMetricMode.Remaining }, cancellationToken);
+    }
+
     public async ValueTask SetWidgetOpacity(double opacity, CancellationToken cancellationToken)
     {
         await UpdateAsync(Settings => Settings with { WidgetOpacity = NormalizeOpacity(opacity) }, cancellationToken);
@@ -182,7 +197,9 @@ public partial record SettingsModel
             settings.Y,
             settings.UseCodex,
             settings.UseClaude,
-            settings.StartWithWindows));
+            settings.StartWithWindows,
+            settings.IsTaskbarBandVisible,
+            settings.TaskbarBandMetricMode));
     }
 
     private static WidgetSettings ToWidgetSettings(SettingsSnapshot settings)
@@ -197,7 +214,9 @@ public partial record SettingsModel
             settings.WidgetY,
             settings.UseCodex,
             settings.UseClaude,
-            settings.StartWithWindows);
+            settings.StartWithWindows,
+            settings.IsTaskbarBandVisible,
+            settings.TaskbarBandMetricMode);
     }
 
     private static SettingsSnapshot Normalize(SettingsSnapshot settings)
@@ -229,7 +248,9 @@ public sealed record SettingsSnapshot(
     int? WidgetY,
     bool UseCodex,
     bool UseClaude,
-    bool StartWithWindows)
+    bool StartWithWindows,
+    bool IsTaskbarBandVisible,
+    TaskbarBandMetricMode TaskbarBandMetricMode)
 {
     public static SettingsSnapshot Default { get; } = new(
         IsWidgetVisible: false,
@@ -241,7 +262,9 @@ public sealed record SettingsSnapshot(
         WidgetY: null,
         UseCodex: true,
         UseClaude: true,
-        StartWithWindows: false);
+        StartWithWindows: false,
+        IsTaskbarBandVisible: false,
+        TaskbarBandMetricMode: TaskbarBandMetricMode.Remaining);
 }
 
 public enum WidgetMode
@@ -257,4 +280,10 @@ public enum WidgetTarget
     Combined,
     Codex,
     Claude
+}
+
+public enum TaskbarBandMetricMode
+{
+    Used,
+    Remaining
 }

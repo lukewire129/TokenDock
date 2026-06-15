@@ -1,0 +1,36 @@
+<Window x:Class="TokenDock.TaskbarBandWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="180"
+        Height="40"
+        Background="Transparent"
+        CanResize="False"
+        ExtendClientAreaToDecorationsHint="True"
+        ShowInTaskbar="False"
+        WindowDecorations="None"
+        Topmost="True"
+        TransparencyLevelHint="Transparent"
+        Title="TokenDock Taskbar Band">
+    <Border Name="BandRoot"
+            Height="34"
+            Padding="10,6"
+            CornerRadius="10"
+            PointerPressed="BandRoot_OnPointerPressed">
+        <StackPanel Spacing="1" VerticalAlignment="Center">
+            <Grid Name="CodexRow" ColumnDefinitions="Auto,*" ColumnSpacing="7">
+                <Ellipse Width="7" Height="7" Fill="#10A37F" VerticalAlignment="Center" />
+                <Grid Grid.Column="1">
+                    <TextBlock Name="CodexNameText" FontSize="11" FontWeight="SemiBold" Text="Codex" />
+                    <TextBlock Name="CodexUsageText" FontSize="11" FontWeight="Normal" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right"/>
+                </Grid>
+            </Grid>
+            <Grid Name="ClaudeRow" ColumnDefinitions="Auto,*" ColumnSpacing="7">
+                <Ellipse Width="7" Height="7" Fill="#D97706" VerticalAlignment="Center" />
+                <Grid Grid.Column="1">
+                    <TextBlock Name="ClaudeNameText" FontSize="11" FontWeight="SemiBold" Text="Claude" />
+                    <TextBlock Name="ClaudeUsageText" FontSize="11" FontWeight="Normal" TextTrimming="CharacterEllipsis" HorizontalAlignment="Right"/>
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>

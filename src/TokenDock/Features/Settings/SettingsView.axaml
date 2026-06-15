@@ -88,6 +88,37 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
+
+            <Border Classes="card">
+                <StackPanel Spacing="16">
+                    <StackPanel Spacing="6">
+                        <TextBlock Classes="sectionTitle" Text="작업표시줄" />
+                        <TextBlock Classes="muted" Text="Windows 작업표시줄 위에 세션/주간 사용량을 한 줄로 표시합니다." TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" RowSpacing="14">
+                        <StackPanel Spacing="4">
+                            <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="작업표시줄 밴드 표시" />
+                            <TextBlock Classes="muted" Text="배경 없이 작업표시줄 위에 Codex/Claude 세션·주간 값을 두 줄로 표시합니다." TextWrapping="Wrap" />
+                        </StackPanel>
+                        <CheckBox Grid.Column="1" Command="{Binding ToggleTaskbarBand}" IsChecked="{Binding Settings.IsTaskbarBandVisible, Mode=OneWay}" />
+
+                        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Spacing="8">
+                            <TextBlock Foreground="#111827" FontSize="14" FontWeight="SemiBold" Text="표시 기준" />
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                <Button Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetTaskbarBandRemainingMode}" Content="남은 사용량" />
+                                <Button Grid.Column="1" Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding SetTaskbarBandUsedMode}" Content="사용량" />
+                            </Grid>
+                            <Border Background="#F9FAFB" CornerRadius="16" Padding="12">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Foreground="#111827" FontSize="13" FontWeight="SemiBold" Text="현재 기준" />
+                                    <TextBlock Classes="muted" Text="{Binding Settings.TaskbarBandMetricMode}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
         </StackPanel>
 
             <Border Grid.Column="1" Classes="card">

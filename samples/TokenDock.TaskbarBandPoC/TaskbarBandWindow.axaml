@@ -1,0 +1,27 @@
+<Window x:Class="TokenDock.TaskbarBandPoC.TaskbarBandWindow"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="240"
+        Height="40"
+        Background="Transparent"
+        CanResize="False"
+        ExtendClientAreaToDecorationsHint="True"
+        ShowInTaskbar="False"
+        WindowDecorations="None"
+        Topmost="True"
+        TransparencyLevelHint="Transparent"
+        Title="TokenDock Taskbar Band PoC">
+  <Border Name="BandRoot"
+          Height="34"
+          MinWidth="220"
+          Padding="12,6"
+          CornerRadius="10">
+    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+      <Ellipse Width="8" Height="8" Fill="#10A37F" VerticalAlignment="Center" />
+      <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+        <TextBlock Name="TitleText" FontSize="12" FontWeight="SemiBold" Text="TokenDock" />
+        <TextBlock Name="UsageText" FontSize="12" Text="Taskbar PoC" />
+      </StackPanel>
+    </Grid>
+  </Border>
+</Window>

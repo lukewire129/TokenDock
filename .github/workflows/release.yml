@@ -64,4 +64,5 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          body_path: release-notes/v${{ env.APP_VERSION }}.md
           files: artifacts/installer/TokenDockSetup-v${{ env.APP_VERSION }}-win-x64.exe
