@@ -38,9 +38,13 @@ jobs:
           $version = $Matches[1]
           $publishDir = Join-Path $env:GITHUB_WORKSPACE 'artifacts/publish'
           $installerDir = Join-Path $env:GITHUB_WORKSPACE 'artifacts/installer'
+          $wingetManifestDir = Join-Path $env:GITHUB_WORKSPACE 'artifacts/winget'
+          $releaseDate = Get-Date -Format 'yyyy-MM-dd'
           "APP_VERSION=$version" >> $env:GITHUB_ENV
           "PUBLISH_DIR=$publishDir" >> $env:GITHUB_ENV
           "INSTALLER_DIR=$installerDir" >> $env:GITHUB_ENV
+          "WINGET_MANIFEST_DIR=$wingetManifestDir" >> $env:GITHUB_ENV
+          "RELEASE_DATE=$releaseDate" >> $env:GITHUB_ENV
 
       - name: Publish app
         run: >
@@ -66,3 +70,23 @@ jobs:
         with:
           body_path: release-notes/v${{ env.APP_VERSION }}.md
           files: artifacts/installer/TokenDockSetup-v${{ env.APP_VERSION }}-win-x64.exe
+
+      - name: Install wingetcreate
+        shell: pwsh
+        run: choco install wingetcreate --yes --no-progress
+
+      - name: Generate winget manifest
+        shell: pwsh
+        run: >
+          wingetcreate update lukewire129.TokenDock
+          --version ${{ env.APP_VERSION }}
+          --urls "https://github.com/lukewire129/TokenDock/releases/download/v${{ env.APP_VERSION }}/TokenDockSetup-v${{ env.APP_VERSION }}-win-x64.exe|x64"
+          --release-notes-url "https://github.com/lukewire129/TokenDock/releases/tag/v${{ env.APP_VERSION }}"
+          --release-date "${{ env.RELEASE_DATE }}"
+          --out "${{ env.WINGET_MANIFEST_DIR }}"
+
+      - name: Upload winget manifest artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: winget-manifest-v${{ env.APP_VERSION }}
+          path: artifacts/winget
