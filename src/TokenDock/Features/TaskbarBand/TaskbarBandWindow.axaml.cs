@@ -13,8 +13,8 @@ namespace TokenDock;
 
 public sealed partial class TaskbarBandWindow : Window
 {
-    private const int BandWidth = 180;
-    private const int BandHeight = 34;
+    private const int BandWidth = 220;
+    private const int BandHeight = 40;
     private const int TaskbarPadding = 8;
 
     private readonly CodexDashboardViewModel _codexDashboard;
@@ -254,7 +254,8 @@ public sealed partial class TaskbarBandWindow : Window
 
     private void ApplyTheme(bool force = false)
     {
-        var isLight = WindowsThemeService.IsLightTheme();
+        var settings = _settings.Settings ?? SettingsSnapshot.Default;
+        var isLight = ResolveIsLightTheme(settings);
         if (!force && _lastLightTheme == isLight)
         {
             return;
@@ -276,6 +277,16 @@ public sealed partial class TaskbarBandWindow : Window
         {
             ClaudeUsageText.Foreground = foreground;
         }
+    }
+
+    private static bool ResolveIsLightTheme(SettingsSnapshot settings)
+    {
+        return settings.ThemeMode switch
+        {
+            ThemeMode.Dark => false,
+            ThemeMode.Light => true,
+            _ => WindowsThemeService.IsLightTheme()
+        };
     }
 
     private void BandRoot_OnPointerPressed(object? sender, PointerPressedEventArgs e)

@@ -7,7 +7,7 @@
         MinWidth="900"
         MinHeight="750"
         SizeToContent="WidthAndHeight"
-        Background="#F4F5F7"
+        Background="{DynamicResource AppBackgroundBrush}"
         ExtendClientAreaToDecorationsHint="True"
         Icon="/Assets/AppIcon.ico"
         Title=" "
@@ -27,41 +27,104 @@
         </DataTemplate>
     </Window.DataTemplates>
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F4F5F7" />
+                    <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="SurfaceAltBrush" Color="#F9FAFB" />
+                    <SolidColorBrush x:Key="SurfaceMutedBrush" Color="#EEF2F7" />
+                    <SolidColorBrush x:Key="AppBorderBrush" Color="#E5E7EB" />
+                    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#111827" />
+                    <SolidColorBrush x:Key="TextMetricBrush" Color="#0F172A" />
+                    <SolidColorBrush x:Key="TextMutedBrush" Color="#6B7280" />
+                    <SolidColorBrush x:Key="ProgressTrackBrush" Color="#E5E7EB" />
+                    <SolidColorBrush x:Key="AccentBrush" Color="#10A37F" />
+                    <SolidColorBrush x:Key="PrimaryButtonBackgroundBrush" Color="#111827" />
+                    <SolidColorBrush x:Key="PrimaryButtonForegroundBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="PrimaryButtonPointerBackgroundBrush" Color="#1F2937" />
+                    <SolidColorBrush x:Key="SecondaryButtonBackgroundBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="SecondaryButtonForegroundBrush" Color="#111827" />
+                    <SolidColorBrush x:Key="SecondaryButtonBorderBrush" Color="#D1D5DB" />
+                    <SolidColorBrush x:Key="SecondaryButtonPointerBackgroundBrush" Color="#F3F4F6" />
+                    <SolidColorBrush x:Key="SecondaryButtonPointerForegroundBrush" Color="#111827" />
+                    <SolidColorBrush x:Key="SecondaryButtonPressedBackgroundBrush" Color="#E5E7EB" />
+                    <SolidColorBrush x:Key="NavTabForegroundBrush" Color="#4B5563" />
+                    <SolidColorBrush x:Key="NavTabPointerBackgroundBrush" Color="#EEF2F7" />
+                    <SolidColorBrush x:Key="ChromeForegroundBrush" Color="#6B7280" />
+                    <SolidColorBrush x:Key="ChromePointerBackgroundBrush" Color="#F3F4F6" />
+                    <SolidColorBrush x:Key="ChromePointerForegroundBrush" Color="#1F2937" />
+                    <SolidColorBrush x:Key="ChromeClosePointerBackgroundBrush" Color="#FEE2E2" />
+                    <SolidColorBrush x:Key="ChromeClosePointerForegroundBrush" Color="#991B1B" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="AppBackgroundBrush" Color="#161616" />
+                    <SolidColorBrush x:Key="SurfaceBrush" Color="#242424" />
+                    <SolidColorBrush x:Key="SurfaceAltBrush" Color="#2D2D2D" />
+                    <SolidColorBrush x:Key="SurfaceMutedBrush" Color="#323232" />
+                    <SolidColorBrush x:Key="AppBorderBrush" Color="#3F3F46" />
+                    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F5F5F5" />
+                    <SolidColorBrush x:Key="TextMetricBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="TextMutedBrush" Color="#A1A1AA" />
+                    <SolidColorBrush x:Key="ProgressTrackBrush" Color="#3F3F46" />
+                    <SolidColorBrush x:Key="AccentBrush" Color="#34D399" />
+                    <SolidColorBrush x:Key="PrimaryButtonBackgroundBrush" Color="#E5E7EB" />
+                    <SolidColorBrush x:Key="PrimaryButtonForegroundBrush" Color="#111827" />
+                    <SolidColorBrush x:Key="PrimaryButtonPointerBackgroundBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="SecondaryButtonBackgroundBrush" Color="#2D2D2D" />
+                    <SolidColorBrush x:Key="SecondaryButtonForegroundBrush" Color="#F9FAFB" />
+                    <SolidColorBrush x:Key="SecondaryButtonBorderBrush" Color="#52525B" />
+                    <SolidColorBrush x:Key="SecondaryButtonPointerBackgroundBrush" Color="#3F3F46" />
+                    <SolidColorBrush x:Key="SecondaryButtonPointerForegroundBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="SecondaryButtonPressedBackgroundBrush" Color="#52525B" />
+                    <SolidColorBrush x:Key="NavTabForegroundBrush" Color="#D4D4D8" />
+                    <SolidColorBrush x:Key="NavTabPointerBackgroundBrush" Color="#323232" />
+                    <SolidColorBrush x:Key="ChromeForegroundBrush" Color="#D4D4D8" />
+                    <SolidColorBrush x:Key="ChromePointerBackgroundBrush" Color="#323232" />
+                    <SolidColorBrush x:Key="ChromePointerForegroundBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="ChromeClosePointerBackgroundBrush" Color="#7F1D1D" />
+                    <SolidColorBrush x:Key="ChromeClosePointerForegroundBrush" Color="#FECACA" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Window.Styles>
         <Style Selector="TextBlock.title">
-            <Setter Property="Foreground" Value="#111827" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
             <Setter Property="FontSize" Value="28" />
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
 
         <Style Selector="TextBlock.sectionTitle">
-            <Setter Property="Foreground" Value="#111827" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
             <Setter Property="FontSize" Value="17" />
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
 
         <Style Selector="TextBlock.metric">
-            <Setter Property="Foreground" Value="#0F172A" />
+            <Setter Property="Foreground" Value="{DynamicResource TextMetricBrush}" />
             <Setter Property="FontSize" Value="34" />
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
 
         <Style Selector="TextBlock.muted">
-            <Setter Property="Foreground" Value="#6B7280" />
+            <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}" />
             <Setter Property="FontSize" Value="13" />
         </Style>
 
         <Style Selector="Border.card">
-            <Setter Property="Background" Value="#FFFFFF" />
-            <Setter Property="BorderBrush" Value="#E5E7EB" />
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AppBorderBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="24" />
             <Setter Property="Padding" Value="20" />
         </Style>
 
         <Style Selector="Border.sidebarCard">
-            <Setter Property="Background" Value="#FFFFFF" />
-            <Setter Property="BorderBrush" Value="#E5E7EB" />
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AppBorderBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="20" />
             <Setter Property="Padding" Value="16" />
@@ -70,30 +133,47 @@
         <Style Selector="ProgressBar">
             <Setter Property="Height" Value="9" />
             <Setter Property="CornerRadius" Value="99" />
-            <Setter Property="Background" Value="#E5E7EB" />
-            <Setter Property="Foreground" Value="#10A37F" />
+            <Setter Property="Background" Value="{DynamicResource ProgressTrackBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
         </Style>
 
         <Style Selector="Button.primary">
-            <Setter Property="Background" Value="#111827" />
-            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryButtonForegroundBrush}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="12" />
             <Setter Property="Padding" Value="14,9" />
         </Style>
 
+        <Style Selector="Button.primary:pointerover">
+            <Setter Property="Background" Value="{DynamicResource PrimaryButtonPointerBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryButtonForegroundBrush}" />
+        </Style>
+
         <Style Selector="Button.secondary">
-            <Setter Property="Background" Value="#FFFFFF" />
-            <Setter Property="Foreground" Value="#111827" />
-            <Setter Property="BorderBrush" Value="#D1D5DB" />
+            <Setter Property="Background" Value="{DynamicResource SecondaryButtonBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryButtonForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SecondaryButtonBorderBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="12" />
             <Setter Property="Padding" Value="12,8" />
         </Style>
 
+        <Style Selector="Button.secondary:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SecondaryButtonPointerBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryButtonPointerForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SecondaryButtonBorderBrush}" />
+        </Style>
+
+        <Style Selector="Button.secondary:pressed">
+            <Setter Property="Background" Value="{DynamicResource SecondaryButtonPressedBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryButtonPointerForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SecondaryButtonBorderBrush}" />
+        </Style>
+
         <Style Selector="Button.navTab">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#4B5563" />
+            <Setter Property="Foreground" Value="{DynamicResource NavTabForegroundBrush}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="CornerRadius" Value="999" />
             <Setter Property="FontSize" Value="13" />
@@ -102,8 +182,8 @@
         </Style>
 
         <Style Selector="Button.navTab:pointerover">
-            <Setter Property="Background" Value="#EEF2F7" />
-            <Setter Property="Foreground" Value="#111827" />
+            <Setter Property="Background" Value="{DynamicResource NavTabPointerBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         </Style>
 
         <Style Selector="Button.chrome">
@@ -112,26 +192,26 @@
             <Setter Property="Padding" Value="0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Foreground" Value="#6B7280" />
+            <Setter Property="Foreground" Value="{DynamicResource ChromeForegroundBrush}" />
             <Setter Property="FontSize" Value="16" />
             <Setter Property="CornerRadius" Value="10" />
         </Style>
 
         <Style Selector="Button.chrome:pointerover">
-            <Setter Property="Background" Value="#F3F4F6" />
-            <Setter Property="Foreground" Value="#1F2937" />
+            <Setter Property="Background" Value="{DynamicResource ChromePointerBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ChromePointerForegroundBrush}" />
         </Style>
 
         <Style Selector="Button.chrome.close:pointerover">
-            <Setter Property="Background" Value="#FEE2E2" />
-            <Setter Property="Foreground" Value="#991B1B" />
+            <Setter Property="Background" Value="{DynamicResource ChromeClosePointerBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ChromeClosePointerForegroundBrush}" />
         </Style>
     </Window.Styles>
 
     <Grid RowDefinitions="Auto,*">
         <Grid ColumnDefinitions="Auto,Auto,*,Auto" Margin="24,10,200,10" ColumnSpacing="12">
-            <Border Background="#FFFFFF"
-                    BorderBrush="#E5E7EB"
+            <Border Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource AppBorderBrush}"
                     BorderThickness="1"
                     CornerRadius="999"
                     Padding="4"
@@ -143,7 +223,7 @@
             </Border>
 
             <Border Grid.Column="1"
-                    Background="#EEF2F7"
+                    Background="{DynamicResource SurfaceMutedBrush}"
                     CornerRadius="999"
                     Padding="4"
                     VerticalAlignment="Center">
@@ -154,7 +234,7 @@
             </Border>
 
             <TextBlock Grid.Column="2"
-                       Foreground="#6B7280"
+                       Foreground="{DynamicResource TextMutedBrush}"
                        FontSize="13"
                        Text="usage monitor"
                        VerticalAlignment="Center" />

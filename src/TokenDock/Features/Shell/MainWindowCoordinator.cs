@@ -1,4 +1,6 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Styling;
 using System.ComponentModel;
 
 namespace TokenDock;
@@ -78,11 +80,15 @@ public sealed class MainWindowCoordinator
         var settings = _settings.Settings ?? SettingsSnapshot.Default;
         var dashboardVisibilityChanged = settings.UseCodex != _lastAppliedSettings.UseCodex
             || settings.UseClaude != _lastAppliedSettings.UseClaude;
+        var themeChanged = settings.ThemeMode != _lastAppliedSettings.ThemeMode;
 
-        if (dashboardVisibilityChanged)
+        if (dashboardVisibilityChanged || themeChanged)
         {
             ApplySettingsState();
-            SetPageContent();
+            if (dashboardVisibilityChanged)
+            {
+                SetPageContent();
+            }
         }
     }
 
@@ -108,6 +114,7 @@ public sealed class MainWindowCoordinator
     private void ApplySettingsState()
     {
         var settings = _settings.Settings ?? SettingsSnapshot.Default;
+        ApplyThemeVariant(settings.ThemeMode);
         DashboardRuntimeSettings.UseCodex = settings.UseCodex;
         DashboardRuntimeSettings.UseClaude = settings.UseClaude;
         _lastAppliedSettings = settings;
@@ -131,5 +138,21 @@ public sealed class MainWindowCoordinator
         {
             command.Execute(null);
         }
+    }
+
+    private static void ApplyThemeVariant(ThemeMode themeMode)
+    {
+        if (Application.Current is null)
+        {
+            return;
+        }
+
+        // 설정값과 Avalonia의 ThemeVariant를 한 곳에서 매핑해 화면과 시스템 트레이 보조 창이 같은 기준을 따르게 한다.
+        Application.Current.RequestedThemeVariant = themeMode switch
+        {
+            ThemeMode.Light => ThemeVariant.Light,
+            ThemeMode.Dark => ThemeVariant.Dark,
+            _ => ThemeVariant.Default
+        };
     }
 }

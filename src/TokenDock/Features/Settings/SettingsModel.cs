@@ -90,6 +90,21 @@ public partial record SettingsModel
         await UpdateAsync(Settings => Settings with { StartWithWindows = !Settings.StartWithWindows }, cancellationToken);
     }
 
+    public async ValueTask SetSystemTheme(CancellationToken cancellationToken)
+    {
+        await UpdateAsync(Settings => Settings with { ThemeMode = ThemeMode.System }, cancellationToken);
+    }
+
+    public async ValueTask SetLightTheme(CancellationToken cancellationToken)
+    {
+        await UpdateAsync(Settings => Settings with { ThemeMode = ThemeMode.Light }, cancellationToken);
+    }
+
+    public async ValueTask SetDarkTheme(CancellationToken cancellationToken)
+    {
+        await UpdateAsync(Settings => Settings with { ThemeMode = ThemeMode.Dark }, cancellationToken);
+    }
+
     public async ValueTask ToggleTaskbarBand(CancellationToken cancellationToken)
     {
         await UpdateAsync(Settings => Settings with { IsTaskbarBandVisible = !Settings.IsTaskbarBandVisible }, cancellationToken);
@@ -199,7 +214,8 @@ public partial record SettingsModel
             settings.UseClaude,
             settings.StartWithWindows,
             settings.IsTaskbarBandVisible,
-            settings.TaskbarBandMetricMode));
+            settings.TaskbarBandMetricMode,
+            settings.ThemeMode));
     }
 
     private static WidgetSettings ToWidgetSettings(SettingsSnapshot settings)
@@ -216,7 +232,8 @@ public partial record SettingsModel
             settings.UseClaude,
             settings.StartWithWindows,
             settings.IsTaskbarBandVisible,
-            settings.TaskbarBandMetricMode);
+            settings.TaskbarBandMetricMode,
+            settings.ThemeMode);
     }
 
     private static SettingsSnapshot Normalize(SettingsSnapshot settings)
@@ -250,7 +267,8 @@ public sealed record SettingsSnapshot(
     bool UseClaude,
     bool StartWithWindows,
     bool IsTaskbarBandVisible,
-    TaskbarBandMetricMode TaskbarBandMetricMode)
+    TaskbarBandMetricMode TaskbarBandMetricMode,
+    ThemeMode ThemeMode)
 {
     public static SettingsSnapshot Default { get; } = new(
         IsWidgetVisible: false,
@@ -264,7 +282,8 @@ public sealed record SettingsSnapshot(
         UseClaude: true,
         StartWithWindows: false,
         IsTaskbarBandVisible: false,
-        TaskbarBandMetricMode: TaskbarBandMetricMode.Remaining);
+        TaskbarBandMetricMode: TaskbarBandMetricMode.Remaining,
+        ThemeMode: ThemeMode.System);
 }
 
 public enum WidgetMode
@@ -286,4 +305,11 @@ public enum TaskbarBandMetricMode
 {
     Used,
     Remaining
+}
+
+public enum ThemeMode
+{
+    System,
+    Light,
+    Dark
 }
