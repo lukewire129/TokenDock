@@ -254,8 +254,7 @@ public sealed partial class TaskbarBandWindow : Window
 
     private void ApplyTheme(bool force = false)
     {
-        var settings = _settings.Settings ?? SettingsSnapshot.Default;
-        var isLight = ResolveIsLightTheme(settings);
+        var isLight = WindowsThemeService.IsLightTheme();
         if (!force && _lastLightTheme == isLight)
         {
             return;
@@ -277,16 +276,6 @@ public sealed partial class TaskbarBandWindow : Window
         {
             ClaudeUsageText.Foreground = foreground;
         }
-    }
-
-    private static bool ResolveIsLightTheme(SettingsSnapshot settings)
-    {
-        return settings.ThemeMode switch
-        {
-            ThemeMode.Dark => false,
-            ThemeMode.Light => true,
-            _ => WindowsThemeService.IsLightTheme()
-        };
     }
 
     private void BandRoot_OnPointerPressed(object? sender, PointerPressedEventArgs e)
