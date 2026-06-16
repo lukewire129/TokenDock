@@ -8,38 +8,91 @@
              d:DesignHeight="560"
              d:DesignWidth="996"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="ClaudeTextPrimaryBrush" Color="#3D2B1F" />
+                    <SolidColorBrush x:Key="ClaudeSectionBrush" Color="#7C3F1D" />
+                    <SolidColorBrush x:Key="ClaudeMetricBrush" Color="#8B3A1D" />
+                    <SolidColorBrush x:Key="ClaudeMutedBrush" Color="#7C6A5B" />
+                    <SolidColorBrush x:Key="ClaudeCardBrush" Color="#FFFDF8" />
+                    <SolidColorBrush x:Key="ClaudeSidebarBrush" Color="#FFF8F0" />
+                    <SolidColorBrush x:Key="ClaudeAltBrush" Color="#F7EFE6" />
+                    <SolidColorBrush x:Key="ClaudeBorderBrush" Color="#E7D5C2" />
+                    <SolidColorBrush x:Key="ClaudeProgressTrackBrush" Color="#EFE2D3" />
+                    <SolidColorBrush x:Key="ClaudeProgressBrush" Color="#C96442" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryBackgroundBrush" Color="#FFF8F0" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryForegroundBrush" Color="#7C3F1D" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryBorderBrush" Color="#D6B99F" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryPointerBackgroundBrush" Color="#F5EFE7" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryPressedBackgroundBrush" Color="#EFE2D3" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="ClaudeTextPrimaryBrush" Color="#FFE0C2" />
+                    <SolidColorBrush x:Key="ClaudeSectionBrush" Color="#F6D3B5" />
+                    <SolidColorBrush x:Key="ClaudeMetricBrush" Color="#FFD7BA" />
+                    <SolidColorBrush x:Key="ClaudeMutedBrush" Color="#C8A98F" />
+                    <SolidColorBrush x:Key="ClaudeCardBrush" Color="#2A2420" />
+                    <SolidColorBrush x:Key="ClaudeSidebarBrush" Color="#302722" />
+                    <SolidColorBrush x:Key="ClaudeAltBrush" Color="#3A2B24" />
+                    <SolidColorBrush x:Key="ClaudeBorderBrush" Color="#5A4535" />
+                    <SolidColorBrush x:Key="ClaudeProgressTrackBrush" Color="#4A3830" />
+                    <SolidColorBrush x:Key="ClaudeProgressBrush" Color="#F59E6B" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryBackgroundBrush" Color="#332822" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryForegroundBrush" Color="#FFE0C2" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryBorderBrush" Color="#6B4E3D" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryPointerBackgroundBrush" Color="#453329" />
+                    <SolidColorBrush x:Key="ClaudeSecondaryPressedBackgroundBrush" Color="#5A4535" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <UserControl.Styles>
         <Style Selector="TextBlock.sectionTitle">
-            <Setter Property="Foreground" Value="#7C3F1D" />
+            <Setter Property="Foreground" Value="{DynamicResource ClaudeSectionBrush}" />
         </Style>
 
         <Style Selector="TextBlock.metric">
-            <Setter Property="Foreground" Value="#8B3A1D" />
+            <Setter Property="Foreground" Value="{DynamicResource ClaudeMetricBrush}" />
         </Style>
 
         <Style Selector="TextBlock.muted">
-            <Setter Property="Foreground" Value="#7C6A5B" />
+            <Setter Property="Foreground" Value="{DynamicResource ClaudeMutedBrush}" />
         </Style>
 
         <Style Selector="Border.card">
-            <Setter Property="Background" Value="#FFFDF8" />
-            <Setter Property="BorderBrush" Value="#E7D5C2" />
+            <Setter Property="Background" Value="{DynamicResource ClaudeCardBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ClaudeBorderBrush}" />
         </Style>
 
         <Style Selector="Border.sidebarCard">
-            <Setter Property="Background" Value="#FFF8F0" />
-            <Setter Property="BorderBrush" Value="#E7D5C2" />
+            <Setter Property="Background" Value="{DynamicResource ClaudeSidebarBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ClaudeBorderBrush}" />
         </Style>
 
         <Style Selector="ProgressBar">
-            <Setter Property="Background" Value="#EFE2D3" />
-            <Setter Property="Foreground" Value="#C96442" />
+            <Setter Property="Background" Value="{DynamicResource ClaudeProgressTrackBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ClaudeProgressBrush}" />
         </Style>
 
         <Style Selector="Button.secondary">
-            <Setter Property="Background" Value="#FFF8F0" />
-            <Setter Property="Foreground" Value="#7C3F1D" />
-            <Setter Property="BorderBrush" Value="#D6B99F" />
+            <Setter Property="Background" Value="{DynamicResource ClaudeSecondaryBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ClaudeSecondaryForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ClaudeSecondaryBorderBrush}" />
+        </Style>
+
+        <Style Selector="Button.secondary:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ClaudeSecondaryPointerBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ClaudeSecondaryForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ClaudeSecondaryBorderBrush}" />
+        </Style>
+
+        <Style Selector="Button.secondary:pressed">
+            <Setter Property="Background" Value="{DynamicResource ClaudeSecondaryPressedBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ClaudeSecondaryForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ClaudeSecondaryBorderBrush}" />
         </Style>
     </UserControl.Styles>
 
@@ -66,9 +119,9 @@
                     </Border>
                     <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" RowSpacing="8" ColumnSpacing="10">
                         <TextBlock Classes="muted" Text="플랜" />
-                        <TextBlock Grid.Column="1" Foreground="#3D2B1F" FontSize="13" FontWeight="SemiBold" Text="{Binding Plan}" />
+                        <TextBlock Grid.Column="1" Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="13" FontWeight="SemiBold" Text="{Binding Plan}" />
                         <TextBlock Grid.Row="1" Classes="muted" Text="갱신" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" Foreground="#3D2B1F" FontSize="13" Text="30분 자동" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="13" Text="30분 자동" />
                     </Grid>
                     <Button Classes="secondary" HorizontalAlignment="Stretch" Command="{Binding Diagnose}" Content="Claude 인증 진단" />
                 </StackPanel>
@@ -79,11 +132,11 @@
                     <TextBlock Classes="sectionTitle" Text="상태" />
                     <StackPanel Spacing="6">
                         <TextBlock Classes="muted" Text="마지막 확인" />
-                        <TextBlock Foreground="#3D2B1F" FontSize="13" FontWeight="SemiBold" Text="{Binding Status}" TextWrapping="Wrap" />
+                        <TextBlock Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="13" FontWeight="SemiBold" Text="{Binding Status}" TextWrapping="Wrap" />
                     </StackPanel>
                     <StackPanel Spacing="6">
                         <TextBlock Classes="muted" Text="자동 갱신" />
-                        <TextBlock Foreground="#3D2B1F" FontSize="13" FontWeight="SemiBold" Text="{Binding NextRefreshText}" />
+                        <TextBlock Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="13" FontWeight="SemiBold" Text="{Binding NextRefreshText}" />
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -91,7 +144,7 @@
             <Border Classes="sidebarCard">
                 <StackPanel Spacing="10">
                     <TextBlock Classes="sectionTitle" Text="알림" />
-                    <TextBlock Foreground="#3D2B1F" FontSize="14" FontWeight="SemiBold" Text="30분 자동 갱신" TextWrapping="Wrap" />
+                    <TextBlock Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="14" FontWeight="SemiBold" Text="30분 자동 갱신" TextWrapping="Wrap" />
                     <TextBlock Classes="muted" Text="Claude usage API를 과하게 호출하지 않도록 최소 30분 간격으로 갱신합니다." TextWrapping="Wrap" />
                 </StackPanel>
             </Border>
@@ -135,7 +188,7 @@
                         <StackPanel Grid.Row="1" Spacing="22" VerticalAlignment="Center">
                             <StackPanel Spacing="10">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <TextBlock Foreground="#3D2B1F" FontSize="15" FontWeight="SemiBold" Text="5시간 한도" />
+                                    <TextBlock Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="15" FontWeight="SemiBold" Text="5시간 한도" />
                                     <TextBlock Grid.Column="1" Classes="muted" Text="{Binding SessionLimit}" />
                                 </Grid>
                                 <ProgressBar Value="{Binding SessionUsedPercent}" Maximum="100" />
@@ -144,15 +197,15 @@
 
                             <StackPanel Spacing="10">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <TextBlock Foreground="#3D2B1F" FontSize="15" FontWeight="SemiBold" Text="주간 한도" />
+                                    <TextBlock Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="15" FontWeight="SemiBold" Text="주간 한도" />
                                     <TextBlock Grid.Column="1" Classes="muted" Text="{Binding WeeklyLimit}" />
                                 </Grid>
-                                <ProgressBar Foreground="#B06A2D" Value="{Binding WeeklyUsedPercent}" Maximum="100" />
+                                <ProgressBar Foreground="{DynamicResource ClaudeProgressBrush}" Value="{Binding WeeklyUsedPercent}" Maximum="100" />
                                 <TextBlock Classes="muted" Text="{Binding WeeklyLimitTimeText}" />
                             </StackPanel>
                         </StackPanel>
 
-                        <Border Grid.Row="2" Background="#F7EFE6" CornerRadius="16" Padding="12">
+                        <Border Grid.Row="2" Background="{DynamicResource ClaudeAltBrush}" CornerRadius="16" Padding="12">
                             <TextBlock Classes="muted" Text="수동 새로고침은 즉시 조회하고, 자동 갱신은 30분마다 실행합니다." TextWrapping="Wrap" />
                         </Border>
                     </Grid>
@@ -162,7 +215,7 @@
                     <Border Classes="card">
                         <StackPanel Spacing="10">
                             <TextBlock Classes="sectionTitle" Text="Claude 사용 제한" />
-                            <TextBlock Foreground="#3D2B1F" FontSize="28" FontWeight="SemiBold" Text="{Binding RateLimitStatus}" TextWrapping="Wrap" />
+                            <TextBlock Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="28" FontWeight="SemiBold" Text="{Binding RateLimitStatus}" TextWrapping="Wrap" />
                             <TextBlock Classes="muted" Text="5시간/주간 한도에 걸려 현재 사용이 제한되는지 표시합니다." TextWrapping="Wrap" />
                         </StackPanel>
                     </Border>
@@ -170,7 +223,7 @@
                     <Border Classes="card">
                         <StackPanel Spacing="10">
                             <TextBlock Classes="sectionTitle" Text="모델별 한도" />
-                            <TextBlock Foreground="#3D2B1F" FontSize="28" FontWeight="SemiBold" Text="{Binding CreditStatus}" TextWrapping="Wrap" />
+                            <TextBlock Foreground="{DynamicResource ClaudeTextPrimaryBrush}" FontSize="28" FontWeight="SemiBold" Text="{Binding CreditStatus}" TextWrapping="Wrap" />
                             <TextBlock Classes="muted" Text="Opus/Sonnet 등 모델별 주간 한도 정보가 있으면 표시합니다." TextWrapping="Wrap" />
                         </StackPanel>
                     </Border>

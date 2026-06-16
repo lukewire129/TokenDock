@@ -65,7 +65,8 @@ public sealed record WidgetSettings(
     bool UseClaude = true,
     bool StartWithWindows = false,
     bool IsTaskbarBandVisible = false,
-    TaskbarBandMetricMode TaskbarBandMetricMode = TaskbarBandMetricMode.Remaining)
+    TaskbarBandMetricMode TaskbarBandMetricMode = TaskbarBandMetricMode.Remaining,
+    ThemeMode ThemeMode = ThemeMode.System)
 {
     public static WidgetSettings Default { get; } = new(
         IsVisible: false,
@@ -79,5 +80,6 @@ public sealed record WidgetSettings(
         UseClaude: true,
         StartWithWindows: false,
         IsTaskbarBandVisible: false,
-        TaskbarBandMetricMode: TaskbarBandMetricMode.Remaining);
+        TaskbarBandMetricMode: TaskbarBandMetricMode.Remaining,
+        ThemeMode: ThemeMode.System);
 }
